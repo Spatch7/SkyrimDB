@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Add Merchant</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+
+        <div id="Insert">
+            <form method="POST" id="AddMerch">
+              <legend>New Merchant</legend>
+              <fieldset>
+                  <label>Name</label><input type="text" name="merchant_name">
+                  <label>Race</label><input type="text" name="race">
+                  <label>Shop Name</label><input type="text" name="shop_name">
+                  <label>Gold</label><input type="text" name="gold">
+                  <label>Location</label><select name="location">
+                      <option value="1">Dawnstar</option>
+                      <option value="2">Falkreath</option>
+                      <option value="3">Markarth</option>
+                      <option value="0">Morthal</option>
+                  </select>
+              </fieldset>
+              <input type="submit" id="AddMerch" value="Add">  
+              <input type="button" value="cancel">
+            </form>
+            
+        </div>
+    </body>   
+</html>
