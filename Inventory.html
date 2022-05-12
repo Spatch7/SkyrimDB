@@ -20,7 +20,8 @@
                     <th>Value</th>
                     <th>Category</th>
                     <th>Enchantment</th>
-                    <th>Remove?</th>
+                    <th>Remove</th>
+                    <th>Update</th>
                 </tr>
                 <tr>
                     <td>1</td>
@@ -32,6 +33,7 @@
                     <td><a href="#">Category</a></td>
                     <td>None</td>
                     <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -43,6 +45,7 @@
                     <td><a href="#">Category</a></td>
                     <td>Fire Damage</td>
                     <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -54,18 +57,19 @@
                     <td><a href="#">Category</a></td>
                     <td>Paralyze</td>
                     <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
                 </tr>
             </table>
         </div>
             <form method="POST" id="AddInventory">
                 <legend>Add to Inventory</legend>
                 <fieldset>
-                    <label>Merchant</label><input type="text" name="MerchantName" value="Oengul War-Avil">
+                    <label>Merchant </label><input type="text" name="MerchantName" value="Oengul War-Avil">
                     <label>Item</label><select name="item">
                         <option value="1">Iron Dagger</option>
-                        <option value="1">Dwarven Dagger</option>
-                        <option value="1">Elven Dagger</option>
-                        <option value="1">Iron Axe</option>
+                        <option value="2">Dwarven Dagger</option>
+                        <option value="3">Elven Dagger</option>
+                        <option value="4">Iron Axe</option>
                     </select>
                 </fieldset>
 
