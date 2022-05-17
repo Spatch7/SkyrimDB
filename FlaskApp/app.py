@@ -21,7 +21,7 @@ def root():
     query = "SELECT * FROM diagnostic;"
     query1 = 'DROP TABLE IF EXISTS diagnostic;';
     query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-    query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL is working!")';
+    query3 = 'INSERT INTO diagnostic (text) VALUES ("Did this update?!")';
     query4 = 'SELECT * FROM diagnostic;';
     cur = mysql.connection.cursor()
     cur.execute(query1)
@@ -37,4 +37,4 @@ def root():
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(port=55123, debug=True)
+    app.run(host='http://flip2.engr.oregonstate.edu', port=55123, debug=True)
