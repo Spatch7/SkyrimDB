@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Merchants</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+        
+
+        <div id="Insert">
+            <form method="POST" id="AddMerch">
+              <legend>New Merchant</legend>
+              <fieldset>
+                  <label>Name</label><input type="text" name="merchant_name">
+                  <label>Race</label><input type="text" name="race">
+                  <label>Shop Name</label><input type="text" name="shop_name">
+                  <label>Gold</label><input type="text" name="gold">
+                  <label>Location</label><select name="location">
+                      <option value="1">Dawnstar</option>
+                      <option value="2">Falkreath</option>
+                      <option value="3">Markarth</option>
+                      <option value="0">Morthal</option>
+                  </select>
+                  <!-- {% for location in location_data %}
+                                {% for values in location %}
+                                <option value='{{values.locationID}}'>{{values.location_name}}</option>
+                                {% endfor %}
+                            {% endfor %} -->
+              </fieldset>
+              <input type="submit" id="AddMerch" value="Add">  
+              <input type="button" value="Cancel">
+            </form>
+            
+        </div>
+
+        <div id="display">
+            <table border="1" cellpadding="5">
+                <caption>Merchants</caption>
+                <!--Entity Labels-->
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Race</th>
+                    <th>Shop Name</th>
+                    <th>Gold</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><a href="Inventory.html">Nurelion</a></td>
+                    <td>Altmer</td>
+                    <td>The White Phial</td>
+                    <td>500</td>
+                    <td><a href="#">Windhelm</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><a href="Inventory.html">Oengul War-Anvil</a></td>
+                    <td>Nord</td>
+                    <td>Blacksmith Quarters</td>
+                    <td>1000</td>
+                    <td><a href="#">Windhelm</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><a href="Inventory.html">Lod</a></td>
+                    <td>Nord</td>
+                    <td>Lod's House</td>
+                    <td>1000</td>
+                    <td><a href="#">Falkreath</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><a href="Inventory.html">Gulum-Ei</a></td>
+                    <td>Argonian</td>
+                    <td>The Winking Skeever</td>
+                    <td>2500</td>
+                    <td><a href="#">Solitude</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

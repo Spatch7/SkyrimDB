@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Merchants</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+        
+        <div id = 'display'>
+            <table border='1' cellpadding='5'>
+                <caption>Merchants</caption>
+
+                <!-- Access data tuple passed from app.py -->
+                {% if data %}
+                    <thead>
+                        <tr>
+                            {% for key in data[0].keys() %} 
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for merchant in data %}
+                        <tr>
+                            {% for key in merchant.keys() %}
+                            <td> {{merchant[key]}} </td>
+                            {% endfor %}
+                            <td>Edit</td>
+                            <td>Delete</td>
+                            <td>Inventory</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id='insert'>
+            <form id='AddMerch' action='/Merchants' method='POST'>
+                <legend>New Merchant</legend>
+                <fieldset>
+                    <label>Name:</label><input type="text" name="merchant_name" required>
+                    <label>Race:</label><input type="text" name="race" required>
+                    <label>Shop Name:</label><input type="text" name="shop_name" required>
+                    <label>Gold:</label><input type="text" name="gold" required>
+                    <label>Location</label>
+                        <select name="location">
+                            <option value="1">Dawnstar</option>
+                            <option value="2">Falkreath</option>
+                            <option value="3">Markarth</option>
+                            <option value="0">Morthal</option>
+                        </select>
+                </fieldset>
+                    <input type='submit' value='Add' name="Add_Merchant'>
+                    <a href='/Mercants><input type='button' value='Cancel'></a> 
+            </form>
+        </div>
+    </body>
+</html>
+        
+                

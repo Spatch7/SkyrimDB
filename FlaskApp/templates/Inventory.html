@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>Inventory</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+
+        <div id="display">
+            <table border="1" cellpadding="5">
+                <caption>Oengul War-Avil's Inventory</caption>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Damage</th>
+                    <th>Weight</th>
+                    <th>Value</th>
+                    <th>Category</th>
+                    <th>Enchantment</th>
+                    <th>Remove</th>
+                    <th>Update</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Iron Dagger</td>
+                    <td>Dagger</td>
+                    <td>5</td>
+                    <td>1</td>
+                    <td>10</td>
+                    <td><a href="#">Category</a></td>
+                    <td>None</td>
+                    <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Dwarven Dagger</td>
+                    <td>Dagger</td>
+                    <td>7</td>
+                    <td>3.5</td>
+                    <td>55</td>
+                    <td><a href="#">Category</a></td>
+                    <td>Fire Damage</td>
+                    <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Elven Dagger</td>
+                    <td>Dagger</td>
+                    <td>8</td>
+                    <td>4</td>
+                    <td>95</td>
+                    <td><a href="#">Category</a></td>
+                    <td>Paralyze</td>
+                    <td><input type="button" value="RemoveItem"></td>
+                    <td><input type="button" value="EditItem"></td>
+                </tr>
+            </table>
+        </div>
+            <form method="POST" id="AddInventory">
+                <legend>Add to Inventory</legend>
+                <fieldset>
+                    <label>Merchant </label><input type="text" name="MerchantName" value="Oengul War-Avil">
+                    <label>Item</label><select name="item">
+                        <option value="1">Iron Dagger</option>
+                        <option value="2">Dwarven Dagger</option>
+                        <option value="3">Elven Dagger</option>
+                        <option value="4">Iron Axe</option>
+                    </select>
+                </fieldset>
+
+            </form>
+        <div id="edit">
+
+        </div>
+    </body>
+</html>

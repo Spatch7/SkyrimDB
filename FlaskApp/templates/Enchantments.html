@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>Enchantments</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+        
+        <div id ="Insert">
+            <form method="POST" id="AddEnchantment">
+                <legend>New Enchantment</legend>
+                <fieldset>
+                    <label>Name</label><input type="text" name="enchantment_name">
+                    <label>School</label><input type="text" name="school">
+                </fieldset>
+                <input type="submit" id="AddEnchantment" value="Add">  
+              <input type="button" value="cancel">
+            </form>
+        </div>
+        
+        <div id = "display">
+            <table border="1" cellpadding="5">
+                <caption>Enchantments</caption>
+                <!--Entity Labels-->
+                <tr>
+                    <th>Id</th>
+                    <th>Enchantment Name</th>
+                    <th>School</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Absorb Health</td>
+                    <td>Destruction</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Absorb Magicak</td>
+                    <td>Destruction</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Absorb Stamina</td>
+                    <td>Destruction</td>
+                </tr>
+        </div>
+    </body>
+</html>

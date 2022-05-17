@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 from flask import request
 import os
 
+
 app = Flask(__name__)
 # DB connection info
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
@@ -14,23 +15,45 @@ app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 
 mysql = MySQL(app)
 
-
 # Routes
+# home page
 @app.route('/')
-def root():
-    query = "SELECT * FROM diagnostic;"
-    query1 = 'DROP TABLE IF EXISTS diagnostic;';
-    query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-    query3 = 'INSERT INTO diagnostic (text) VALUES ("Did this update?!")';
-    query4 = 'SELECT * FROM diagnostic;';
-    cur = mysql.connection.cursor()
-    cur.execute(query1)
-    cur.execute(query2)
-    cur.execute(query3)
-    cur.execute(query4)
-    results = cur.fetchall()
+def home():
+    return redirect('/Merchants')#render_template("Merchants.j2")
 
-    return results[0]
+@app.route('/Merchants', methods=['POST', 'GET'])
+def merchants():
+    if request.method == 'POST':
+        #if press add
+        if request.form.get('Add_Merchant'):
+            merchant_name = request.form['merchant_name']
+            race = request.form['race']
+            shop_name = request.form['shop_name']
+            gold = request.form['gold']
+            location = request.form['location']    
+
+            query = 'INSERT INTO Merchants (merchant_name, race, shop_name, gold, Locations_locationID) VALUES (%s, %s, %s, %s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (merchant_name, race, shop_name, gold, Locations_locationID))
+            mysql.connection.commit()
+        
+        return redirect('/Merchants')
+
+    if request.method == 'GET':
+        query = 'Select * from Merchants'
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        results = json.dumps(data)
+
+        query2 = 'SELECT locationID, location_name FROM Locations;'
+        cur = mysql.connection.cursor()
+        cur.execute(query2)
+        location_data = cur.fetchall()
+        results2 = json.dumps(location_data)
+
+        return render_template('Merchants.j2', data=data, location_data=location_data)
+
 
 
 # Listener
