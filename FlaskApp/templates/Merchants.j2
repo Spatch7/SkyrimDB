@@ -26,9 +26,10 @@
                             {% for key in merchant.keys() %}
                             <td> {{merchant[key]}} </td>
                             {% endfor %}
-                            <td>Edit</td>
-                            <td>Delete</td>
-                            <td>Inventory</td>
+                            <td><a href="Merchants_edit/{{data.id}}" class="btn btn-default">Edit</a></td>
+                            <td><a href="Merchants_delete/{{data.id}}" class="btn btn-default">Delete</a></td>
+                            {# I think this is a comment? Inventory link doesn't work yet #}
+                            <td><a href="Inventory/">Inventor</td>
                         </tr>
                         {% endfor %}
                     </tbody>

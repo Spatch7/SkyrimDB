@@ -19,12 +19,13 @@ mysql = MySQL(app)
 # home page
 @app.route('/')
 def home():
-    return redirect('/Merchants')#render_template("Merchants.j2")
+    return redirect('/Merchants')   # render_template("Merchants.j2")
 
 @app.route('/Merchants', methods=['POST', 'GET'])
 def merchants():
     if request.method == 'POST':
-        #if press add
+        # if press user adds a new merchant, 
+        # obtain stats and update page with new merchant
         if request.form.get('Add_Merchant'):
             merchant_name = request.form['merchant_name']
             race = request.form['race']
@@ -54,7 +55,49 @@ def merchants():
 
         return render_template('Merchants.j2', data=data, location_data=location_data)
 
+@app.route('/Merchants_delete/<int:id>')
+def delete_merchant(id):
+    """Receives merchant id, deletes a merchant from the Merchant table"""
+    query = "DELETE FROM Merchants WHERE id='%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    # Return to merchants page after removing merchant
+    return redirect("/Merchants")
 
+
+@app.route("/Merchants_edit/<int:id>", methods=["POST", "GET"])
+def edit_merchant(id):
+    """Receive merthant id, brings up edit field for merchant table"""
+    if request.method == "GET"
+        # query for merchant id for edit reference
+        query = "SELECT * FROM Merchants WHERE id = %s" %(id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cut.fetchall()
+
+        query2 = 'SELECT locationID, location_name FROM Locations;'
+        cur = mysql.connection.cursor()
+        cur.execute(query2)
+        location_data = cur.fetchall()
+        results2 = json.dumps(location_data)
+        # Render page
+        return render_template("edit_merchants.j2", data=data, location_data=location_data)
+
+    if request.method == "POST":
+        if request.form.get('EDIT_Merchant'):
+            id = request.form["id"]
+            merchant_name = request.form['merchant_name']
+            race = request.form['race']
+            shop_name = request.form['shop_name']
+            gold = request.form['gold']
+            location = request.form['location']
+            
+
+
+
+
+            return
+        return
 
 # Listener
 if __name__ == "__main__":
