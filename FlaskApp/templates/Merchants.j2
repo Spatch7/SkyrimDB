@@ -29,7 +29,7 @@
                             <td><a href="Merchants_edit/{{data.id}}" class="btn btn-default">Edit</a></td>
                             <td><a href="Merchants_delete/{{data.id}}" class="btn btn-default">Delete</a></td>
                             {# I think this is a comment? Inventory link doesn't work yet #}
-                            <td><a href="Inventory/">Inventor</td>
+                            <td><a href="Inventory/">Inventory</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -47,14 +47,13 @@
                     <label>Gold:</label><input type="text" name="gold" required>
                     <label>Location</label>
                         <select name="location">
-                            <option value="1">Dawnstar</option>
-                            <option value="2">Falkreath</option>
-                            <option value="3">Markarth</option>
-                            <option value="0">Morthal</option>
+                             {% for location in location_data %}
+                                <option value='{{ location.locationID }}'>{{ location.location_name }}</option>
+                            {% endfor %}
                         </select>
                 </fieldset>
-                    <input type='submit' value='Add' name="Add_Merchant'>
-                    <a href='/Mercants><input type='button' value='Cancel'></a> 
+                    <input type='submit' value='Add' name='Add_Merchant'>
+                    <a href='/Merchants'><input type='button' value='Cancel'></a> 
             </form>
         </div>
     </body>

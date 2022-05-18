@@ -31,7 +31,7 @@ def merchants():
             race = request.form['race']
             shop_name = request.form['shop_name']
             gold = request.form['gold']
-            location = request.form['location']    
+            Locations_locationID = request.form['location']    
 
             query = 'INSERT INTO Merchants (merchant_name, race, shop_name, gold, Locations_locationID) VALUES (%s, %s, %s, %s, %s);'    
             cur = mysql.connection.cursor()
@@ -45,13 +45,13 @@ def merchants():
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
-        results = json.dumps(data)
+        
 
         query2 = 'SELECT locationID, location_name FROM Locations;'
         cur = mysql.connection.cursor()
         cur.execute(query2)
         location_data = cur.fetchall()
-        results2 = json.dumps(location_data)
+        
 
         return render_template('Merchants.j2', data=data, location_data=location_data)
 
@@ -61,46 +61,47 @@ def delete_merchant(id):
     query = "DELETE FROM Merchants WHERE id='%s';"
     cur = mysql.connection.cursor()
     cur.execute(query, (id,))
+    mysql.connection.commit()
     # Return to merchants page after removing merchant
     return redirect("/Merchants")
 
 
-@app.route("/Merchants_edit/<int:id>", methods=["POST", "GET"])
-def edit_merchant(id):
-    """Receive merthant id, brings up edit field for merchant table"""
-    if request.method == "GET"
-        # query for merchant id for edit reference
-        query = "SELECT * FROM Merchants WHERE id = %s" %(id)
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        data = cut.fetchall()
+# @app.route("/Merchants_edit/<int:id>", methods=["POST", "GET"])
+# def edit_merchant(id):
+#     """Receive merthant id, brings up edit field for merchant table"""
+#     if request.method == "GET"
+#         # query for merchant id for edit reference
+#         query = "SELECT * FROM Merchants WHERE id = %s" %(id)
+#         cur = mysql.connection.cursor()
+#         cur.execute(query)
+#         data = cut.fetchall()
 
-        query2 = 'SELECT locationID, location_name FROM Locations;'
-        cur = mysql.connection.cursor()
-        cur.execute(query2)
-        location_data = cur.fetchall()
-        results2 = json.dumps(location_data)
-        # Render page
-        return render_template("edit_merchants.j2", data=data, location_data=location_data)
+#         query2 = 'SELECT locationID, location_name FROM Locations;'
+#         cur = mysql.connection.cursor()
+#         cur.execute(query2)
+#         location_data = cur.fetchall()
+#         results2 = json.dumps(location_data)
+#         # Render page
+#         return render_template("edit_merchants.j2", data=data, location_data=location_data)
 
-    if request.method == "POST":
-        if request.form.get('EDIT_Merchant'):
-            id = request.form["id"]
-            merchant_name = request.form['merchant_name']
-            race = request.form['race']
-            shop_name = request.form['shop_name']
-            gold = request.form['gold']
-            location = request.form['location']
+#     if request.method == "POST":
+#         if request.form.get('EDIT_Merchant'):
+#             id = request.form["id"]
+#             merchant_name = request.form['merchant_name']
+#             race = request.form['race']
+#             shop_name = request.form['shop_name']
+#             gold = request.form['gold']
+#             location = request.form['location']
             
 
 
 
 
-            return
-        return
+        #     return
+        # return
 
 # Listener
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(host='http://flip2.engr.oregonstate.edu', port=55123, debug=True)
+    app.run(host='http://flip2.engr.oregonstate.edu', port=55122, debug=True)
