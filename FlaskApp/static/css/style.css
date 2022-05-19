@@ -1,0 +1,13 @@
+
+
+body {
+    /* margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    background-color: rgb(81, 84, 105);
+  }
+
+table, th, td {
+    border: 1px solid;
+    background-color: rgb(rgb(185, 191, 241), green, blue);
+}

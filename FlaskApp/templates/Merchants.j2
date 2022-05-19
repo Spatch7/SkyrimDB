@@ -1,9 +1,9 @@
 <html>
     <head>
         <title>Merchants</title>
-        <link href="style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
-    <body>
+    <body background-color: grey>
         <h1>SkyrimSearch</h1>
         [<a href="Merchants.html">Merchants</a>|<a href="Items.html">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
         
@@ -26,10 +26,10 @@
                             {% for key in merchant.keys() %}
                             <td> {{merchant[key]}} </td>
                             {% endfor %}
-                            <td><a href="Merchants_edit/{{data.id}}" class="btn btn-default">Edit</a></td>
+                            {# <td><a href="Merchants_edit/{{data.id}}" class="btn btn-default">Edit</a></td> #}
                             <td><a href="Merchants_delete/{{data.id}}" class="btn btn-default">Delete</a></td>
                             {# I think this is a comment? Inventory link doesn't work yet #}
-                            <td><a href="Inventory/">Inventory</td>
+                            <td><a href="Inventory/">Items</td>
                         </tr>
                         {% endfor %}
                     </tbody>
