@@ -101,6 +101,16 @@ def items():
 
     return render_template('Items.j2', data=data, categories=categories, enchantments=enchantments)
 
+@app.route('/Items_delete/<int:id>')
+def delete_item(id):
+    """Receives items ID and deletes the item."""
+    query = "DELETE FROM Items WHERE itemID = '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to Items page after removing merchant
+    return redirect("/Items")
+
     
 
 
