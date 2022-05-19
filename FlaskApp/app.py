@@ -76,13 +76,13 @@ def items():
             category = request.form['Categories_categoryID']
             enchantment = request.form['Enchantments_enchantmentID']
 
-            query = 'INSERT INTO Items (item_name, item_class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID) VALUES (%s, %s, %s, %s, %s, %s, %s);'
+            query = 'INSERT INTO Items (item_name, class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID) VALUES (%s, %s, %s, %s, %s, %s, %s);'
             cur = mysql.connection.cursor()
-            cur.execute(query, (item_name, item_class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID))
+            cur.execute(query, (item_name, item_class, damage, weight, value, category, enchantment))
             mysql.connection.commit()
 
             return redirect('/Items')
-            
+
     if request.method == 'GET':
         query = 'SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Items INNER JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID;'
         cur = mysql.connection.cursor()
