@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>Merchants</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+        
+        <div id='display'>
+            <table border='1' cellpadding='5'>
+                <caption>Items</caption>
+                {% if data %}
+                <thead>
+                    <tr>
+                        {% for key in data[0].keys() %} 
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                    <tr>
+                        {% for key in item.keys() %}
+                        <td> {{ item[key] }} </td>
+                        {% endfor %}
+                        <td><a href="Items_delete/{{item.itemID}}" class='btn'>Delete</a></td>
+                        <td><a href="Items_edit/{{item.itemID}}" class='btn'>Edit</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id="insert">
+            <form id='Add_Item' action='/Items' method='POST'>
+                <legend>New Item</legend>
+                <fieldset>
+                    <label>Name:</label><input type='text' name='item_name' required>
+                    <label>Class:</label><input type='text' name='class' required>
+                    <label>Damage:</label><input type='int' name='damage'>
+                    <label>Weight:</label><input type='int' name='weight' required>
+                    <label>Value:</label><input type='int' name='value' required>
+                    <label>Category:</label>
+                        <select name='Categories_categoryID'>
+                            {% for category in categories %}
+                                <option value='{{ category.categoryID }}'>{{ category.category_name}}</option>
+                            {% endfor %}
+                        </select>
+                    <label>Enchantment:</label>
+                        <select name='Enchantments_enchantmentID'>
+                            {% for enchantment in enchantments %}
+                                <option value='{{ enchantment.enchantmentID }}'>{{ enchantment.enchantment_name}}</option>
+                            {% endfor %}
+                        </select>
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Item'>
+                    <a href='/Items'><input type='button' value='Cancel'
+            </form>
+        </div>
+    </body>
+</html>

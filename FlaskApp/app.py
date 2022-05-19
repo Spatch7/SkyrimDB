@@ -52,53 +52,82 @@ def merchants():
         cur.execute(query2)
         location_data = cur.fetchall()
         
-
         return render_template('Merchants.j2', data=data, location_data=location_data)
 
 @app.route('/Merchants_delete/<int:id>')
 def delete_merchant(id):
     """Receives merchant id, deletes a merchant from the Merchant table"""
-    query = "DELETE FROM Merchants WHERE id='%s';"
+    query = "DELETE FROM Merchants WHERE merchantID= '%s';"
     cur = mysql.connection.cursor()
     cur.execute(query, (id,))
     mysql.connection.commit()
     # Return to merchants page after removing merchant
     return redirect("/Merchants")
 
+@app.route('/Items', methods = ['POST', 'GET'])
+def items():
+    if request.method == 'POST':
+        if request.form.get('Add_Item'):
+            item_name = request.form['item_name']
+            item_class = request.form['class']
+            damage = request.form['damage']
+            weight = request.form['weight']
+            value = request.form['value']
+            category = request.form['Categories_categoryID']
+            enchantment = request.form['Enchantments_enchantmentID']
 
-# @app.route("/Merchants_edit/<int:id>", methods=["POST", "GET"])
-# def edit_merchant(id):
-#     """Receive merthant id, brings up edit field for merchant table"""
-#     if request.method == "GET"
-#         # query for merchant id for edit reference
-#         query = "SELECT * FROM Merchants WHERE id = %s" %(id)
-#         cur = mysql.connection.cursor()
-#         cur.execute(query)
-#         data = cut.fetchall()
+            query = 'INSERT INTO Items (item_name, item_class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID) VALUES (%s, %s, %s, %s, %s, %s, %s);'
+            cur = mysql.connection.cursor()
+            cur.execute(query, (item_name, item_class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID))
+            mysql.connection.commit()
 
-#         query2 = 'SELECT locationID, location_name FROM Locations;'
-#         cur = mysql.connection.cursor()
-#         cur.execute(query2)
-#         location_data = cur.fetchall()
-#         results2 = json.dumps(location_data)
-#         # Render page
-#         return render_template("edit_merchants.j2", data=data, location_data=location_data)
-
-#     if request.method == "POST":
-#         if request.form.get('EDIT_Merchant'):
-#             id = request.form["id"]
-#             merchant_name = request.form['merchant_name']
-#             race = request.form['race']
-#             shop_name = request.form['shop_name']
-#             gold = request.form['gold']
-#             location = request.form['location']
+            return redirect('/Items')
             
+    if request.method == 'GET':
+        query = 'SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Items INNER JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID;'
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        query2 = 'SELECT * FROM Categories;'
+        cur = mysql.connection.cursor()
+        cur.execute(query2)
+        categories = cur.fetchall()
+
+        query3 = 'SELECT enchantmentID, enchantment_name FROM Enchantments;'
+        cur = mysql.connection.cursor()
+        cur.execute(query3)
+        enchantments = cur.fetchall()
+
+    return render_template('Items.j2', data=data, categories=categories, enchantments=enchantments)
+
+    
 
 
 
+@app.route('/Merchants_Items/<int:id>', methods = ['POST', 'GET'])
+def merchants_items(id):
+    # if request.method == 'POST':
 
-        #     return
-        # return
+    if request.method == 'GET':
+        query = "SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Merchants_Items INNER JOIN Items on Merchants_Items.Items_itemID = Items.itemID LEFT JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID WHERE Merchants_Items.Merchants_merchantID = '%s';"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (id,))
+        merchants_items = cur.fetchall()
+
+        query2 = 'SELECT merchantID, merchant_name FROM Merchants;'
+        cur = mysql.connection.cursor()
+        cur.execute(query2)
+        merchants_list = cur.fetchall()
+
+        query3 = "SELECT * FROM Merchants WHERE merchantID = '%s';"
+        cur = mysql.connection.cursor()
+        cur.execute(query3, (id,))
+        merchant = cur.fetchall()
+
+        return render_template('Merchants_Items.j2', merchants_items = merchants_items, merchants_list = merchants_list, merchant=merchant)
+
+
 
 # Listener
 if __name__ == "__main__":

@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Merchants Items</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Items">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+            
+        <div id='select'>  
+            
+            <form id='SelectMerchant' action='/Merchants_Items/' method='GET'>
+                <legend>Select Merchant</legend>
+                <fieldset>
+                    <select name='merchantID'>
+                        {% for merchant in merchants_list %}
+                        <option value='{{ merchant.merchantID }}'>{{ merchant.merchant_name }}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <input type='submit' value='I dont know how to make this work!' formaction='/Merchants_Items/{{ merchant.merchantID }}'>
+            </form>
+            
+        </div>
+            
+        <div id='display'>
+            <table border='1' cellpadding='5'>
+            {% if merchants_items %}
+                {% for name in merchant %}
+                <caption>{{ name.merchant_name }}'s Items</caption>
+                {% endfor %}
+                <thead>
+                    <tr>
+                        {% for key in merchants_items[0].keys() %} 
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in merchants_items %}
+                    <tr>
+                        {% for key in item.keys() %}
+                        <td> {{item[key]}} </td>
+                        {% endfor %}
+                        <td>Delete</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            {% else %}
+                {% for name in merchant %}
+                <caption>{{ name.merchant_name }}'s Items</caption>
+                {% endfor %}
+                    <td>No items</td>
+            {% endif %}
+            </table>
+        </div>
+    </body>
+</html>
+
+
+        
