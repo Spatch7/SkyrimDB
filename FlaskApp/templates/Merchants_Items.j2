@@ -8,8 +8,7 @@
         [<a href="/Merchants">Merchants</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Items">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
             
         <div id='select'>  
-            
-            <form id='SelectMerchant' action='/Merchants_Items/' method='GET'>
+            <form id='Select_Merchant' action='/Merchants_Items/' method='GET'>
                 <legend>Select Merchant</legend>
                 <fieldset>
                     <select name='merchantID'>
@@ -18,9 +17,9 @@
                         {% endfor %}
                     </select>
                 </fieldset>
-                <input type='submit' value='I dont know how to make this work!' formaction='/Merchants_Items/{{ merchant.merchantID }}'>
+                <input type='submit' value='I dont know how to make this work!'>
             </form>
-            
+           
         </div>
             
         <div id='display'>

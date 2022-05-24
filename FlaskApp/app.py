@@ -40,13 +40,13 @@ def merchants():
         
         return redirect('/Merchants')
 
+    # display merchants
     if request.method == 'GET':
         query = 'Select * from Merchants'
         cur = mysql.connection.cursor()
         cur.execute(query)
         data = cur.fetchall()
         
-
         query2 = 'SELECT locationID, location_name FROM Locations;'
         cur = mysql.connection.cursor()
         cur.execute(query2)
@@ -66,6 +66,7 @@ def delete_merchant(id):
 
 @app.route('/Items', methods = ['POST', 'GET'])
 def items():
+    # add an item
     if request.method == 'POST':
         if request.form.get('Add_Item'):
             item_name = request.form['item_name']
@@ -76,13 +77,22 @@ def items():
             category = request.form['Categories_categoryID']
             enchantment = request.form['Enchantments_enchantmentID']
 
-            query = 'INSERT INTO Items (item_name, class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID) VALUES (%s, %s, %s, %s, %s, %s, %s);'
-            cur = mysql.connection.cursor()
-            cur.execute(query, (item_name, item_class, damage, weight, value, category, enchantment))
-            mysql.connection.commit()
+            # if enchantment is Null
+            if enchantment == '0':
+                query = 'INSERT INTO Items (item_name, class, damage, weight, value, Categories_categoryID) VALUES (%s, %s, %s, %s, %s, %s);'
+                cur = mysql.connection.cursor()
+                cur.execute(query, (item_name, item_class, damage, weight, value, category))
+                mysql.connection.commit()
+            # enchantment not null
+            else:
+                query = 'INSERT INTO Items (item_name, class, damage, weight, value, Categories_categoryID, Enchantments_enchantmentID) VALUES (%s, %s, %s, %s, %s, %s, %s);'
+                cur = mysql.connection.cursor()
+                cur.execute(query, (item_name, item_class, damage, weight, value, category, enchantment))
+                mysql.connection.commit()
 
             return redirect('/Items')
 
+    # display items
     if request.method == 'GET':
         query = 'SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Items INNER JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID;'
         cur = mysql.connection.cursor()
@@ -111,8 +121,54 @@ def delete_item(id):
     # Return to Items page after removing merchant
     return redirect("/Items")
 
-    
+@app.route('/Items_edit/<int:id>', methods=['POST', 'GET'])
+def edit_item(id):
+    """TODO"""
+    if request.method == 'GET':
+        # query for the item to update
+        query = "SELECT * FROM Items WHERE itemID = %s;" %(id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        item = cur.fetchall()
 
+        # query for enchantments
+        query2 = "SELECT enchantmentID, enchantment_name FROM Enchantments"
+        cur = mysql.connection.cursor()
+        cur.execute(query2)
+        enchantments = cur.fetchall()
+
+        # query for categories
+        query3 = "SELECT * FROM Categories"
+        cur = mysql.connection.cursor()
+        cur.execute(query3)
+        categories = cur.fetchall()
+
+        return render_template("Edit_Item.j2", item=item, enchantments=enchantments, categories=categories)
+    
+    if request.method == "POST":
+        if request.form.get("Edit_Item"):
+            id = request.form["itemID"]
+            name = request.form["item_name"]
+            item_class = request.form["class"]
+            damage = request.form["damage"]
+            weight = request.form["weight"]
+            value = request.form["value"]
+            category = request.form["Categories_categoryID"]
+            enchantment = request.form["Enchantments_enchantmentID"]
+
+            if enchantment == "0":
+                query = "UPDATE Items SET Items.item_name = %s, Items.class = %s, Items.damage = %s, Items.weight = %s, Items.value = %s, Items.Categories_categoryID = %s, Items.Enchantments_enchantmentID = NULL WHERE Items.itemID = %s;"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (name, item_class, damage, weight, value, category, id))
+                mysql.connection.commit()
+
+            else:
+                query = "UPDATE Items SET Items.item_name = %s, Items.class = %s, Items.damage = %s, Items.weight = %s, Items.value = %s, Items.Categories_categoryID = %s, Items.Enchantments_enchantmentID = %s WHERE Items.itemID = %s;"
+                cur = mysql.connection.cursor()
+                cur.execute(query, (name, item_class, damage, weight, value, category, enchantment, id))
+                mysql.connection.commit()
+
+            return redirect("/Items")
 
 
 @app.route('/Merchants_Items/<int:id>', methods = ['POST', 'GET'])
@@ -120,6 +176,9 @@ def merchants_items(id):
     # if request.method == 'POST':
 
     if request.method == 'GET':
+        if request.form.get('Select_Merchant'):
+            id = request.query #request.form['merchantID']
+
         query = "SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Merchants_Items INNER JOIN Items on Merchants_Items.Items_itemID = Items.itemID LEFT JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID WHERE Merchants_Items.Merchants_merchantID = '%s';"
         cur = mysql.connection.cursor()
         cur.execute(query, (id,))

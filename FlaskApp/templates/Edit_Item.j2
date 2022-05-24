@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Edit Items</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchant's Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+
+        <div id="display">
+            {% if item %}
+            <table border='1' cellpadding='5'>
+                <caption>{{ item[0].item_name }}</caption>
+                <thead>
+                    <tr>
+                        {% for key in item[0].keys() %}
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% for key in item[0].values() %}
+                        <td>{{ key }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+            {% endif %}
+        
+        <div id="edit">
+            <form id='Edit_Item' action="/Items_edit/{{ item[0].itemID }}" method="POST">
+                <legend>Edit Item</legend>
+                <fieldset>
+                    <input type="hidden" value="{{item[0].itemID}}" id="itemID" name="itemID" required>
+                    
+                    <label>Name:</label>
+                    <input type="text" value="{{item[0].item_name}}" id="item_name" name="item_name" required>
+
+                    <label>Class:</label>
+                    <input type="text" value="{{item[0].class}}" id="class" name="class" required>
+
+                    <label>Damage:</label>
+                    <input type="text" value="{{item[0].damage}}" id="damage" name="damage">
+
+                    <label>Weight:</label>
+                    <input type="text" value="{{item[0].weight}}" id="weight" name="weight" required>
+
+                    <label>Value:</label>
+                    <input type="text" value="{{item[0].value}}" id="value" name="value" required>
+
+                    <label>Category:</label>
+                    <select name="Categories_categoryID">
+                        {% for category in categories %}
+                        {% if category['categoryID'] == item[0].Categories_categoryID %}
+                            <option value = "{{category.categoryID}}" selected>{{category.category_name}}</option>
+                        {% else %}
+                            <option value = "{{category.categoryID}}">{{category.category_name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <label>Enchantment:</label>
+                    <select name="Enchantments_enchantmentID">
+                        <option value="0">None</option>
+                        {% for enchantment in enchantments %}
+                        {% if enchantment['enchantmentID'] == item[0].Enchantments_enchantmentID%}
+                            <option value="{{enchantment.enchantmentID}}" selected>{{enchantment.enchantment_name}}</option>
+                        {% else %}
+                            <option value = "{{enchantment.enchantmentID}}">{{enchantment.enchantment_name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <input type="submit" value="Submit" name="Edit_Item">
+                <a href="/Items"><input type="button" value="Cancel"></a>
+            </form>
+        </div>
+    </body>
+</html>
+
+
+

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Merchants</title>
+        <title>Items</title>
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -50,13 +50,14 @@
                         </select>
                     <label>Enchantment:</label>
                         <select name='Enchantments_enchantmentID'>
+                                <option value ='0'>None</option>
                             {% for enchantment in enchantments %}
                                 <option value='{{ enchantment.enchantmentID }}'>{{ enchantment.enchantment_name}}</option>
                             {% endfor %}
                         </select>
                 </fieldset>
                     <input type='submit' value='Add' name='Add_Item'>
-                    <a href='/Items'><input type='button' value='Cancel'
+                    <a href='/Items'><input type='button' value='Cancel'>
             </form>
         </div>
     </body>
