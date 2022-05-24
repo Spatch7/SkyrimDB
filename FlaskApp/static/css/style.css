@@ -39,3 +39,11 @@ td {
 td:hover {
     color: rgb(115, 160, 245);
 }
+
+form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    color:azure;
+    background-color: rgba(49, 49, 58, 0.986);
+}
