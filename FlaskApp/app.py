@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, redirect
+from flask import Flask, render_template, json, redirect, request
 from flask_mysqldb import MySQL
 from flask import request
 import os
@@ -170,16 +170,49 @@ def edit_item(id):
 
             return redirect("/Items")
 
+# @app.route('/Merchants_Items')
+# def select_merchant():
+#     if request.method == 'GET':
+#         query2 = 'SELECT merchantID, merchant_name FROM Merchants;'
+#         cur = mysql.connection.cursor()
+#         cur.execute(query2)
+#         merchants_list = cur.fetchall()
+#         print(merchants_list[0].get('merchantID'))
+
+#         id = merchants_list[0].get('merchantID')
+
+#         return redirect("/Merchants_Items/<id>")
+#         # return render_template('Merchants_Items.j2', merchants_items = None, merchants_list = merchants_list, merchant=None)
+
 
 @app.route('/Merchants_Items/<int:id>', methods = ['POST', 'GET'])
 def merchants_items(id):
-    # # if request.method == 'POST':
+    if request.method == 'POST':
+        if request.form.get('Add_Inventory'):
+            merchantID = request.form['merchantID']
+            itemID = request.form['itemID']
+
+            query = 'INSERT INTO Merchants_Items (Merchants_merchantID, Items_itemID) VALUES (%s, %s);'
+            cur = mysql.connection.cursor()
+            cur.execute(query, (merchantID, itemID))
+            mysql.connection.commit()
+
+            return redirect('/Merchants_Items/{merchantID}')
 
     if request.method == 'GET':
-        if request.form.get('Select_Merchant'):
-            
-            # id = request.form["merchantID"] #request.form['merchantID']
+        if id is None:
+            query2 = 'SELECT merchantID, merchant_name FROM Merchants;'
+            cur = mysql.connection.cursor()
+            cur.execute(query2)
+            merchants_list = cur.fetchall()
 
+            return render_template('Merchants_Items.j2', merchants_items = None, merchants_list = merchants_list, merchant=None)
+
+
+        if request.args:
+            id = request.args.get('merchantID')
+            id = int(id)
+        
         query = "SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Merchants_Items INNER JOIN Items on Merchants_Items.Items_itemID = Items.itemID LEFT JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID WHERE Merchants_Items.Merchants_merchantID = '%s';"
         cur = mysql.connection.cursor()
         cur.execute(query, (id,))
@@ -195,7 +228,12 @@ def merchants_items(id):
         cur.execute(query3, (id,))
         merchant = cur.fetchall()
 
-        return render_template('Merchants_Items.j2', merchants_items = merchants_items, merchants_list = merchants_list, merchant=merchant)
+        query4 = 'SELECT itemID, item_name FROM Items;'
+        cur = mysql.connection.cursor()
+        cur.execute(query4)
+        item_list = cur.fetchall()
+
+        return render_template('Merchants_Items.j2', merchants_items = merchants_items, merchants_list = merchants_list, merchant=merchant, item_list=item_list)
 
 @app.route('/Categories', methods = ['POST', 'GET'])
 def categories():

@@ -6,22 +6,24 @@
     <body>
         <h1>SkyrimSearch</h1>
         [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Categories">Categories</a>|<a href="/Locations">Locations</a>|<a href="/Enchantments">Enchantments</a>]
-            
+
+        {% if merchants_list %}   
         <div id='select'>  
-            <form id='Select_Merchant' action='/Merchants_Items/<int:id>' method='GET'>
+            <form id='Select_Merchant'  method='GET'>
                 <legend>Select Merchant</legend>
                 <fieldset>
                     <select name='merchantID'>
-                        {% for merchants in merchants_list %}
-                        <option value='{{ merchants.merchantID }}'>{{ merchants.merchant_name }}</option>
+                        {% for merch in merchants_list %}
+                        <option value='{{ merch.merchantID }}'>{{ merch.merchant_name }}</option>
                         {% endfor %}
                     </select>
                 </fieldset>
-                <input type='submit' name='Select_Merchant' value='Select'>
+                <input type='submit'  value='Select' action='/Merchants_Items/<int:id>'>
             </form>
-           
         </div>
-            
+        {% endif %}
+
+        {% if merchant %}    
         <div id='display'>
             <table border='1' cellpadding='5'>
             {% if merchants_items %}
@@ -41,7 +43,7 @@
                         {% for key in item.keys() %}
                         <td> {{item[key]}} </td>
                         {% endfor %}
-                        <td>Delete</td>
+                        <td>Remove</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -52,6 +54,28 @@
                     <td>No items</td>
             {% endif %}
             </table>
+        </div>
+        {% endif %}
+        <div id='Insert'>
+            <form id='Add_Inventory' action='/Merchants_Items/{{merchant.merchantID}}' method='POST'>
+                <legend>Add an Item to Merchants Items</legend>
+                <fieldset>
+                    <label>Merchant:</label>
+                        <select name="merchantID">
+                            {% for merch in merchants_list %}
+                            <option value='{{ merch.merchantID }}'>{{ merch.merchant_name}}</option>
+                            {% endfor %}
+                        </select>
+                    <label>Item:</label>
+                        <select name="itemID">
+                            {% for item in item_list %}
+                            <option value='{{ item.itemID }}'>{{item.item_name}}</option>
+                            {% endfor %}
+                        </select>
+                </fieldset>
+                <input type='submit' value='Add' name='Add_Inventory'>
+                <a href='/Merchants_Items/{{merchant.merchantID}}'><input type='button' value='Cancel'></a>
+            </form>
         </div>
     </body>
 </html>
