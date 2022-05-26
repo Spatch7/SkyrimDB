@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Enchantments</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Categories">Categories</a>|<a href="/Locations">Locations</a>|<a href="/Enchantments">Enchantments</a>]
+        
+        <div id = 'display'>
+            <table border='1' cellpadding='5'>
+                <caption>Enchantments</caption>
+
+                <!-- Access data tuple passed from app.py -->
+                {% if data %}
+                    <thead>
+                        <tr>
+                            {% for key in data[0].keys() %} 
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enchantment in data %}
+                        <tr>
+                            {% for key in enchantment.keys() %}
+                            <td> {{enchantment[key]}} </td>
+                            {% endfor %}
+                            <td><a href="Enchantments_delete/{{enchantment.enchantmentID}}" class="btn btn-default">Delete</a></td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id='insert'>
+            <form id='Add_Enchantment' action='/Enchantments' method='POST'>
+                <legend>New Category</legend>
+                <fieldset>
+                    <label>Name:</label><input type="text" name="enchantment_name" required>
+                    <label>School:</label><input type="text" name="school">
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Enchantment'>
+                    <a href='/Enchantments'><input type='button' value='Cancel'></a> 
+            </form>
+        </div>
+    </body>
+</html>

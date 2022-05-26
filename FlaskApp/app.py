@@ -173,11 +173,12 @@ def edit_item(id):
 
 @app.route('/Merchants_Items/<int:id>', methods = ['POST', 'GET'])
 def merchants_items(id):
-    # if request.method == 'POST':
+    # # if request.method == 'POST':
 
     if request.method == 'GET':
         if request.form.get('Select_Merchant'):
-            id = request.query #request.form['merchantID']
+            
+            # id = request.form["merchantID"] #request.form['merchantID']
 
         query = "SELECT itemID, item_name, class, damage, weight, value, Categories.category_name AS category, Enchantments.enchantment_name AS enchantment FROM Merchants_Items INNER JOIN Items on Merchants_Items.Items_itemID = Items.itemID LEFT JOIN Categories ON Items.Categories_categoryID = Categories.categoryID LEFT JOIN Enchantments ON Items.Enchantments_enchantmentID = Enchantments.enchantmentID WHERE Merchants_Items.Merchants_merchantID = '%s';"
         cur = mysql.connection.cursor()
@@ -196,7 +197,104 @@ def merchants_items(id):
 
         return render_template('Merchants_Items.j2', merchants_items = merchants_items, merchants_list = merchants_list, merchant=merchant)
 
+@app.route('/Categories', methods = ['POST', 'GET'])
+def categories():
+    # display categories
+    if request.method == "GET":
+        query = "SELECT * FROM Categories;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
 
+        return render_template('Categories.j2', data=data)
+
+    # add a category
+    if request.method =="POST":
+        if request.form.get('Add_Category'):
+            category_name = request.form['category_name']
+
+            query = 'INSERT INTO Categories (category_name) VALUES (%s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (category_name,))
+            mysql.connection.commit()
+
+            return redirect('/Categories')
+
+@app.route('/Categories_delete/<int:id>')
+def categoriesDelete(id):
+    query = "DELETE FROM Categories WHERE categoryID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to categories page after removing category
+    return redirect("/Categories")
+
+
+@app.route('/Enchantments', methods = ['POST', 'GET'])
+def enchantments():
+    # display enchantments
+    if request.method == "GET":
+        query = "SELECT * FROM Enchantments;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        return render_template('Enchantments.j2', data=data)
+
+    # add enchantment
+    if request.method =="POST":
+        if request.form.get('Add_Enchantment'):
+            enchantment_name = request.form['enchantment_name']
+            school = request.form['school']
+            if school == "":
+                school = 'None'
+
+            query = 'INSERT INTO Enchantments (enchantment_name, school) VALUES (%s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (enchantment_name, school))
+            mysql.connection.commit()
+            return redirect('/Enchantments')
+
+@app.route('/Enchantments_delete/<int:id>')
+def delete_enchantment(id):
+    query = "DELETE FROM Enchantments WHERE enchantmentID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to enchantments page after removing enchantment
+    return redirect("/Enchantments")
+
+@app.route('/Locations', methods = ['POST', 'GET'])
+def location():
+    # display locations
+    if request.method == "GET":
+        query = "SELECT * FROM Locations;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        return render_template('Locations.j2', data=data)
+    
+    # add location
+    if request.method =="POST":
+        if request.form.get('Add_Location'):
+            hold = request.form['hold']
+            location_name = request.form['location_name']
+            location_type = request.form['location_type']
+
+            query = 'INSERT INTO Locations (location_name, hold, type) VALUES (%s, %s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (location_name, hold, location_type))
+            mysql.connection.commit()
+
+            return redirect('/Locations')
+
+@app.route('/Locations_delete/<int:id>')
+def delete_location(id):
+    query = "DELETE FROM Locations WHERE locationID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to locations page after removing location
+    return redirect("/Locations")
 
 # Listener
 if __name__ == "__main__":

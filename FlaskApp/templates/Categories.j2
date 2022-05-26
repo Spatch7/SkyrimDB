@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Item Categories</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Categories">Categories</a>|<a href="/Locations">Locations</a>|<a href="/Enchantments">Enchantments</a>]
+        
+        <div id = 'display'>
+            <table border='1' cellpadding='5'>
+                <caption>Categories</caption>
+
+                <!-- Access data tuple passed from app.py -->
+                {% if data %}
+                    <thead>
+                        <tr>
+                            {% for key in data[0].keys() %} 
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in data %}
+                        <tr>
+                            {% for key in category.keys() %}
+                            <td> {{category[key]}} </td>
+                            {% endfor %}
+                            <td><a href="Categories_delete/{{category.categoryID}}" class="btn btn-default">Delete</a></td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id='insert'>
+            <form id='Add_Category' action='/Categories' method='POST'>
+                <legend>New Category</legend>
+                <fieldset>
+                    <label>Category Name:</label><input type="text" name="category_name" required>
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Category'>
+                    <a href='/Categories'><input type='button' value='Cancel'></a> 
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Location</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchants Items</a>|<a href="/Categories">Categories</a>|<a href="/Locations">Locations</a>|<a href="/Enchantments">Enchantments</a>]
+        
+        <div id = 'display'>
+            <table border='1' cellpadding='5'>
+                <caption>Location</caption>
+
+                <!-- Access data tuple passed from app.py -->
+                {% if data %}
+                    <thead>
+                        <tr>
+                            {% for key in data[0].keys() %} 
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for location in data %}
+                        <tr>
+                            {% for key in location.keys() %}
+                            <td> {{location[key]}} </td>
+                            {% endfor %}
+                            <td><a href="Locations_delete/{{location.locationID}}" class="btn btn-default">Delete</a></td>
+                            
+                            {# <td><a href="Merchants_Items/{{merchant.merchantID}}">Items</td> #}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id='insert'>
+            <form id='Add_Location' action='/Locations' method='POST'>
+                <legend>New Location</legend>
+                <fieldset>
+                    <label>Name:</label><input type="text" name="location_name" required>
+                    <label>Hold:</label><input type="text" name="hold" required>
+                    <label>Type:</label><input type="text" name="location_type" required>
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Location'>
+                    <a href='/Locations'><input type='button' value='Cancel'></a> 
+            </form>
+        </div>
+    </body>
+</html>
