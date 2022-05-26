@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Enchantments</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
+        
+        <div id = 'display'>
+            <table border='1' cellpadding='5'>
+                <caption>Categories</caption>
+
+                <!-- Access data tuple passed from app.py -->
+                {% if data %}
+                    <thead>
+                        <tr>
+                            {% for key in data[0].keys() %} 
+                            <th>{{ key }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for enchantment in data %}
+                        <tr>
+                            {% for key in enchantment.keys() %}
+                            <td> {{enchantment[key]}} </td>
+                            {% endfor %}
+                            <td><a href="Merchants_delete/{{category.categoryID}}" class="btn btn-default">Delete</a></td>
+                            
+                            {# <td><a href="Merchants_Items/{{merchant.merchantID}}">Items</td> #}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+
+        <div id='insert'>
+            <form id='Add_Enchantment' action='/Enchantments' method='POST'>
+                <legend>New Category</legend>
+                <fieldset>
+                    <label>Enchantment ID:</label><input type="text" name="enchantmentID" required>
+                    <label>Enchantment Mame:</label><input type="text" name="enchantment_name" required>
+                    <label>School:</label><input type="text" name="school" required>
+                    {# <label>Shop Name:</label><input type="text" name="shop_name" required> #}
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Category'>
+                    <a href='/Enchantments'><input type='button' value='Cancel'></a> 
+            </form>
+        </div>
+    </body>
+</html>

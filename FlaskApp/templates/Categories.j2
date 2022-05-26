@@ -24,10 +24,9 @@
                         {% for category in data %}
                         <tr>
                             {% for key in category.keys() %}
-                            <td> {{merchant[key]}} </td>
+                            <td> {{category[key]}} </td>
                             {% endfor %}
-                            <td><a href="Merchants_delete/{{category.categoryID}}" class="btn btn-default">Delete</a></td>
-                            
+                            <td><a href="Categories_delete/{{category.categoryID}}" class="btn btn-default">Delete</a></td>
                             {# <td><a href="Merchants_Items/{{merchant.merchantID}}">Items</td> #}
                         </tr>
                         {% endfor %}
@@ -40,7 +39,7 @@
             <form id='Add_Category' action='/Categories' method='POST'>
                 <legend>New Category</legend>
                 <fieldset>
-                    <label>categoryID:</label><input type="text" name="categoryID" required>
+                    <label>Category ID:</label><input type="text" name="categoryID" required>
                     <label>Category Name:</label><input type="text" name="category_name" required>
                     {# <label>Shop Name:</label><input type="text" name="shop_name" required> #}
                 </fieldset>

@@ -64,6 +64,7 @@ def delete_merchant(id):
     # Return to merchants page after removing merchant
     return redirect("/Merchants")
 
+
 @app.route('/Items', methods = ['POST', 'GET'])
 def items():
     # add an item
@@ -173,8 +174,6 @@ def edit_item(id):
 
 @app.route('/Merchants_Items/<int:id>', methods = ['POST', 'GET'])
 def merchants_items(id):
-    # if request.method == 'POST':
-
     if request.method == 'GET':
         if request.form.get('Select_Merchant'):
             id = request.query #request.form['merchantID']
@@ -197,9 +196,69 @@ def merchants_items(id):
         return render_template('Merchants_Items.j2', merchants_items = merchants_items, merchants_list = merchants_list, merchant=merchant)
 
 
+@app.route('/Categories', methods = ['POST', 'GET'])
+def categories():
+    if request.method == "GET":
+        query = "SELECT * FROM Categories;
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        return render_template('Categories.j2', data=data)
+
+    if request.method =="POST":
+        if request.form.get('Add_Category'):
+            categoryID = request.form['categoryID']
+            category_name = request.form['category_name']
+            query = 'INSERT INTO Categories (categoryID, category_name) VALUES (%s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (categoryID, category_name))
+            mysql.connection.commit()
+            return redirect('/Categories')
+
+
+@app.route('/Categories_delete/<int:id>')
+def categoriesDelete(id)
+    query = "DELETE FROM Categories WHERE categoryID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to categories page after removing merchant
+    return redirect("/Categories")
+
+
+@app.route('/Enchantments')
+def enchantments():
+    if request.method == "GET":
+        query = "SELECT * FROM Enchantments;
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        return render_template('Enchantments.j2', data=data)
+
+    if request.method =="POST":
+        if request.form.get('Add_Enchantment'):
+            enchantmentID = request.form['enchantmentID']
+            enchantment_name = request.form['enchantment_name']
+            school = request.form['school']
+            query = 'INSERT INTO Enchantments (enchantmentID, enchantment_name, school) VALUES (%s, %s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (enchantmentID, enchantment_name, school))
+            mysql.connection.commit()
+            return redirect('/Enchantments')
+
+@app.route('/Enchantments_delete/<int:id>')
+def delete_enchantment(id):
+    query = "DELETE FROM Enchantments WHERE enchantmentID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to enchantments page after removing merchant
+    return redirect("/Enchantments")
+
+
 
 # Listener
 if __name__ == "__main__":
 
     #Start the app on port 3000, it will be different once hosted
-    app.run(host='http://flip2.engr.oregonstate.edu', port=55122, debug=True)
+    app.run(host='http://flip2.engr.oregonstate.edu', port=55123, debug=True)
