@@ -255,6 +255,37 @@ def delete_enchantment(id):
     # Return to enchantments page after removing merchant
     return redirect("/Enchantments")
 
+@app.route('Locations/')
+def location():
+    if request.method == "GET":
+        query = "SELECT * FROM Locations;
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+        return render_template('Locations.j2', data=data)
+
+    if request.method =="POST":
+        if request.form.get('Add_Location'):
+            hold = request.form['hold']
+            locationID = request.form['locationID']
+            location_name = request.form['location_name']
+            location_type = request.form['location_type']
+            query = 'INSERT INTO Locations (hold, locationID, location_name, location_type) VALUES (%s, %s, %s, %s);'    
+            cur = mysql.connection.cursor()
+            cur.execute(query, (hold, locationID, location_name, location_type))
+            mysql.connection.commit()
+            return redirect('/Locations')
+
+@app.route('/Locations_delete/<int:id>')
+def delete_location(id):
+    query = "DELETE FROM Locations WHERE locationID= '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (id,))
+    mysql.connection.commit()
+    # Return to enchantments page after removing merchant
+    return redirect("/Locations")
+
+
 
 
 # Listener
