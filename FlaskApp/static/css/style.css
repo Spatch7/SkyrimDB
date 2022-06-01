@@ -7,9 +7,6 @@ caption {
 }
 
 body {
-    /* margin: 0;
-    padding: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
     background-color: rgb(3, 3, 3);
   }
 
@@ -21,8 +18,6 @@ table {
     text-align: center;
     padding: 6px;
     border: 10px solid;
-    /* border-color: rgba(49, 49, 58, 0.986); 
-     color:rgb(54, 97, 179); */
     background-color: rgba(49, 49, 58, 0.986);
 }
 
@@ -52,4 +47,43 @@ form {
     margin-right: auto;
     color:azure;
     background-color: rgba(49, 49, 58, 0.986);
+}
+
+.admin {
+    text-align: center;
+    margin:auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a.admin {
+    display:block;
+    text-align: center;
+}
+
+
+a.navigation {
+text-decoration: none;
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+line-height: 3;
+color: black;
+border-radius: 2px;
+padding: 5px;
+}
+
+a.navigation:link, a.navigation:visited, a.navigation:focus {
+text-decoration: none;
+background: rgb(151, 151, 151);
+}
+
+a.navigation:hover {
+background: rgb(100, 100, 100);
+}
+
+a.navigation:active {
+text-decoration: none;
+background: rgb(115, 160, 245);
+color: white;
 }
