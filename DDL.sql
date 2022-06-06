@@ -11,6 +11,13 @@ CREATE OR REPLACE TABLE Categories (
     PRIMARY KEY (categoryID)
 );
 
+CREATE OR REPLACE TABLE Enchantments (
+    enchantmentID int NOT NULL AUTO_INCREMENT,
+    enchantment_name varchar(45) NOT NULL,
+    school varchar(45),
+    PRIMARY KEY (enchantmentID)
+);
+
 CREATE OR REPLACE TABLE Items (
     itemID int NOT NULL AUTO_INCREMENT,
     item_name varchar(45) NOT NULL,
@@ -23,13 +30,6 @@ CREATE OR REPLACE TABLE Items (
     PRIMARY KEY (itemID),
     FOREIGN KEY (Categories_categoryID) REFERENCES Categories (categoryID),
     FOREIGN KEY (Enchantments_enchantmentID) REFERENCES Enchantments (enchantmentID)
-);
-
-CREATE OR REPLACE TABLE Enchantments (
-    enchantmentID int NOT NULL AUTO_INCREMENT,
-    enchantment_name varchar(45) NOT NULL,
-    school varchar(45),
-    PRIMARY KEY (enchantmentID)
 );
 
 CREATE OR REPLACE TABLE Locations (
@@ -46,7 +46,7 @@ CREATE OR REPLACE TABLE Merchants (
     race varchar(45) NOT NULL,
     shop_name varchar(45),
     gold int NOT NULL,
-    Locations_locationID int,
+    Locations_locationID int NOT NULL,
     PRIMARY KEY (merchantID),
     FOREIGN KEY (Locations_locationID) REFERENCES Locations (locationID)
 );
@@ -87,7 +87,7 @@ VALUES ('Dawnstar', 'The Pale', 'City'),
 ('Riverwood', 'Whiterun Hold', 'Town'),
 ('Rorikstead', 'Whiterun Hold', 'Town'),
 ('Narzulbur', 'Eastmarch', 'Orc Stronghold'),
-('Dragon Bridge', 'Haafingar', 'Town'),
+('Dragons Bridge', 'Haafingar', 'Town'),
 ('Mor Khazgur', 'Haafingar', 'Orc Stronghold'),
 ('Dushnikh Yal', 'The Reach', 'Orc Stronghold'),
 ("Shor's Stone", 'The Rift', 'Town'),

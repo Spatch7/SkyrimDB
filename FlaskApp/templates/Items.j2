@@ -32,8 +32,8 @@
                         {% for key in item.keys() %}
                         <td> {{ item[key] }} </td>
                         {% endfor %}
-                        <td><a href="Items_delete/{{item.itemID}}" class='btn'>Delete</a></td>
-                        <td><a href="Items_edit/{{item.itemID}}" class='btn'>Edit</a></td>
+                        <td><a href="/Items_delete/{{item.itemID}}" class='btn'>Delete</a></td>
+                        <td><a href="/Items_edit/{{item.itemID}}" class='btn'>Edit</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
