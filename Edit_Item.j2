@@ -1,19 +1,11 @@
 <html>
     <head>
         <title>Edit Items</title>
-        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+        <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <h1>SkyrimSearch</h1>
-        <div class="admin">
-        <a href="/Merchants" class="navigation">Merchants</a>
-        <a href="/Items" class="navigation">Items</a>
-        <a href="/Merchants_Items" class="navigation">Merchants Items</a>
-        <a href="/Categories" class="navigation">Categories</a>
-        <a href="/Merchants_Categories" class="navigation">Merchants Categories</a>
-        <a href="/Locations" class="navigation">Locations</a>
-        <a href="/Enchantments" class="navigation">Enchantments</a>
-        </div>
+        [<a href="/Merchants">Merchants</a>|<a href="/Items">Items</a>|<a href="/Merchants_Items">Merchant's Items</a>|<a href="Categories.html">Categories</a>|<a href="Locations.html">Locations</a>|<a href="Enchantments.html">Enchantments</a>]
 
         <div id="display">
             {% if item %}

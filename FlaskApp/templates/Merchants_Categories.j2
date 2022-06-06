@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>Merchants Categories</title>
+        <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+    </head>
+    <body>
+        <h1>SkyrimSearch</h1>
+        <div class="admin">
+        <a href="/Merchants" class="navigation">Merchants</a>
+        <a href="/Items" class="navigation">Items</a>
+        <a href="/Merchants_Items" class="navigation">Merchants Items</a>
+        <a href="/Categories" class="navigation">Categories</a>
+        <a href="/Merchants_Categories" class="navigation">Merchants Categories</a>
+        <a href="/Locations" class="navigation">Locations</a>
+        <a href="/Enchantments" class="navigation">Enchantments</a>
+        </div>
+
+        {% if id  == 0 %}
+
+        <div id='select'>
+            <form id='Select_Category' method='GET'>
+                <legend>Select a Category</legend>
+                <fieldset>
+                    <select name='categoryID'>
+                        {% for cat in category_list %}
+                        <option value='{{ cat.categoryID }}'>{{ cat.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <input type='submit' value='Select' action='/Merchants_Categories/<int:id>'>
+            </form>
+        </div>
+
+        {% else %}
+
+        <div id='select'>
+            <form id='Select_Category' method='GET'>
+                <legend>Select a Category</legend>
+                <fieldset>
+                    <select name='categoryID'>
+                        {% for cat in category_list %}
+                            {% if cat['categoryID'] == id %}
+                                <option value='{{ cat.categoryID }}' selected>{{ cat.category_name}}</option>
+                            {% else %}
+                                <option value='{{ cat.categoryID }}'>{{ cat.category_name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </fieldset>
+                <input type='submit' value='Select' action='/Merchants_Categories/<int:id>'>
+            </form>
+        </div>
+
+        <div id='insert'>
+            <form id='Add_Cat_Merch' action='/Merchants_Categories/{{category[0].categoryID}}' method='POST'>
+                <legend>Add Category to Merchant</legend>
+                <fieldset>
+                    <label>Merchant:</label>
+                        <select name='merchantID'>
+                            {% for name in merchants_list%}
+                            <option value='{{ name.merchantID }}'>{{ name.merchant_name }}</option>
+                            {% endfor %}
+                        </select>
+                    <label>Category:</label>
+                        <select name='categoryID'>
+                            {% for cat in category_list %}
+                            {% if cat.categoryID == category[0].categoryID %}
+                                <option value='{{cat.categoryID}}' selected>{{ cat.category_name }}</option>
+                            {% else %}
+                                <option value='{{cat.categoryID}}'>{{ cat.category_name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                </fieldset>
+                    <input type='submit' value='Add' name='Add_Cat_Merch'>
+                    <a href='/Merchants_Categories/{{category[0].categoryID}}'><input type='button' value='Cancel'>
+            </form>
+        </div>
+
+        <div id='display'>
+            <table border='1' cellpadding='5'>
+                {# {% for name in merchant %} #}
+                <caption>{{category[0].category_name}}'s</caption>
+                {# {% endfor %} #}
+                <thead>
+                    <tr>
+                        {% for key in merchants_categories[0] %} 
+                        <th>{{ key }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat in merchants_categories %}
+                    <tr>
+                        {% for key in cat %}                        
+                        <td> {{cat[key]}} </td>
+                        {% endfor %}
+                        <td><a href="/Merchants_Items/{{cat.merchantID}}">Items</td>
+                        <td><a href="/Merchants_Categories_Delete/{{cat.merchantID}}/{{category[0].categoryID}}" class='btn'>Remove</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> 
+
+        {% endif %}
+
+    </body>
+</html>

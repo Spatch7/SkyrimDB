@@ -10,6 +10,7 @@
         <a href="/Items" class="navigation">Items</a>
         <a href="/Merchants_Items" class="navigation">Merchants Items</a>
         <a href="/Categories" class="navigation">Categories</a>
+        <a href="/Merchants_Categories" class="navigation">Merchants Categories</a>
         <a href="/Locations" class="navigation">Locations</a>
         <a href="/Enchantments" class="navigation">Enchantments</a>
         </div>
@@ -34,9 +35,9 @@
                             {% for key in merchant.keys() %}
                             <td> {{merchant[key]}} </td>
                             {% endfor %}
-                            <td><a href="Merchants_delete/{{merchant.merchantID}}" class="btn btn-default">Delete</a></td>
+                            <td><a href="/Merchants_delete/{{merchant.merchantID}}" class="btn btn-default">Delete</a></td>
                             
-                            <td><a href="Merchants_Items/{{merchant.merchantID}}">Items</td>
+                            <td><a href="/Merchants_Items/{{merchant.merchantID}}">Items</td>
                         </tr>
                         {% endfor %}
                     </tbody>
